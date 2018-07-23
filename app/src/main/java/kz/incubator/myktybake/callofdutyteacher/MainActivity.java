@@ -22,6 +22,7 @@ import kz.incubator.myktybake.callofdutyteacher.activity.DutyActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Changed from Acer
+    //Added comment from Mac
 
     Button btnJobs, btnDuty;
     FirebaseAuth mAuth;
