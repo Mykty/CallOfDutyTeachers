@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/new_jobs"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="@string/job1" />
+
+    <item
+        android:id="@+id/checking_jobs"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="@string/job2" />
+
+    <item
+        android:id="@+id/finished_jobs"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/job3" />
+
+</menu>

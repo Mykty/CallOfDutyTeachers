@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">CallOfDutyTeacher</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="login_error">Fill login or password correctly</string>
+    <string name="inet_check">Check Internet connection</string>
+    <string name="sing_up_fail">Логин немесе құпия сөзді қате тердіңіз.</string>
+    <string name="singing">Жүйеге кіру жүріп жатыр, күте тұрыңыз...</string>
+    <string name="sing_out">Жүйеден шығу</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="my_cart">My Cart</string>
+    <string name="delete">DELETE</string>
+    <string name="save">Сақтау</string>
+    <string name="jobs_str">Міндеттерім</string>
+    <string name="duty_str">Борыш</string>
+    <string name="my_lessons">Сабақтар</string>
+    <string name="my_jobs">Жұмыстар</string>
+    <string name="instructions">Нұсқаулар</string>
+    <string name="mistakes">Қателер</string>
+    <string name="news">Хабарландыру</string>
+
+    <string name="teacher_list">Мұғалімдер тізімі</string>
+    <string name="progress">Өнімділік: 0%</string>
+
+    <string name="job1">Жаңа</string>
+    <string name="job2">Тексеріліп жатыр</string>
+    <string name="job3">Біткен</string>
+
+    <string name="semestr1">I семестр</string>
+    <string name="semestr2">II семестр</string>
+
+    <string name="delStr">Өшіру</string>
+    <string name="addingNewTeacher2">Жаңа мұғалім енгізу!</string>
+    <string name="name">Аты-жөні</string>
+    <string name="email">Емайл</string>
+    <string name="phoneNumber">Телефон номер</string>
+    <string name="password">Құпия сөз</string>
+    <string name="photo">Сурет таңдау</string>
+    <string name="photoSelected">Сурет таңдалды</string>
+    <string name="addingNewTeacher">Жаңа адам енгізіліп жатыр...</string>
+    <string name="addingNewTeacherSuccess">Жаңа адам сәтті енгізілді!</string>
+    <string name="photoLoading">Сурет сақталып жатыр...</string>
+    <string name="inetConnection">Интернет байланысыңызды тексеріңіз!</string>
+
+    <string name="notfoundUser">Қолданушы табылған жоқ!</string>
+    <string name="phoneNumberMistake">Телефон номер дұрыс толтырылмады</string>
+    <string name="photoSelectMistake">Сурет таңдалмады</string>
+    <string name="passwordMistake">Құпия сөз ұзындығы 6-дан көп болуы керек</string>
+    <string name="passwordMistake2">Құпия сөз дұрыс толтырылмады</string>
+    <string name="passwordMistake3">Құпия сөз әлсіз болып тұр</string>
+    <string name="fill_mistake">Толығымен толтырыңыз</string>
+    <string name="email_mistake">Электр. пошта мекен-жайы дұрыстап толтырыңыз</string>
+    <string name="email_duplicate">Бұндай электр. пошта мекен-жайы тіркелген</string>
+
+    <string-array name="jobTypes">
+        <item>Аттестация</item>
+        <item>Журнал</item>
+        <item>Сынақ</item>
+        <item>Емтихан</item>
+        <item>РУП</item>
+        <item>КТП</item>
+        <item>Сабақ жоспары</item>
+        <item>Практика</item>
+        <item>Кураторлық жұмыстар</item>
+        <item>Портфолио</item>
+        <item>Басқа</item>
+    </string-array>
+
+
+
+</resources>

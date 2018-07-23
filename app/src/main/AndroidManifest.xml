@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kz.incubator.myktybake.callofdutyteacher">
+
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/edu_icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/edu_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity android:name=".activity.ModeratorActivity" />
+
+        <activity android:name=".activity.DutyActivity" />
+
+        <activity android:name=".activity.DocJobsActivity" />
+
+        <activity android:name=".moderator_files.TeacherJobActivity"
+            android:theme="@style/AppTheme.ActionBar"  />
+
+        <activity android:name=".activity.ScannerActivity" />
+        <activity android:name=".activity.SearchActivity" />
+
+        <activity
+            android:name=".rexpandable.GroupsRecyclerActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".rexpandable.AddAbsentsActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+    </application>
+
+</manifest>
