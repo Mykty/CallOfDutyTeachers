@@ -21,6 +21,7 @@ import kz.incubator.myktybake.callofdutyteacher.activity.DocJobsActivity;
 import kz.incubator.myktybake.callofdutyteacher.activity.DutyActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    //Changed from Acer
 
     Button btnJobs, btnDuty;
     FirebaseAuth mAuth;
