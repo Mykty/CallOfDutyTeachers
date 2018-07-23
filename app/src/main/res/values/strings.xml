@@ -26,7 +26,7 @@
     <string name="progress">Өнімділік: 0%</string>
 
     <string name="job1">Жаңа</string>
-    <string name="job2">Тексеріліп жатыр</string>
+    <string name="job2">Тексеріс</string>
     <string name="job3">Біткен</string>
 
     <string name="semestr1">I семестр</string>
@@ -41,6 +41,8 @@
     <string name="photo">Сурет таңдау</string>
     <string name="photoSelected">Сурет таңдалды</string>
     <string name="addingNewTeacher">Жаңа адам енгізіліп жатыр...</string>
+    <string name="addingNewJob">Жаңа жұмыс енгізу.</string>
+    <string name="lessonList">Сабақтар тізімі</string>
     <string name="addingNewTeacherSuccess">Жаңа адам сәтті енгізілді!</string>
     <string name="photoLoading">Сурет сақталып жатыр...</string>
     <string name="inetConnection">Интернет байланысыңызды тексеріңіз!</string>
@@ -69,6 +71,12 @@
         <item>Басқа</item>
     </string-array>
 
-
+    <string-array name="lessonList">
+        <item>1-01 Информатика\nСағат саны: 28</item>
+        <item>1-02 Информатика\nСағат саны: 24</item>
+        <item>1-03 Информатика\nСағат саны: 56</item>
+        <item>1-04 Информатика\nСағат саны: 30</item>
+        <item>2-01 Информатика\nСағат саны: 42</item>
+    </string-array>
 
 </resources>

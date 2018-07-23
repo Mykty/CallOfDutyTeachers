@@ -52,26 +52,28 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
     ImageView tPhoto;
     TextView tInfo, tProgress;
-    DatabaseReference teacherRef;
+    DatabaseReference teacherRef, lessonRef;
     BiColoredProgress teacherProgressPhoto;
     List<Lesson> cartList;
     FirebaseUser currentUser;
     RecyclerView recyclerView;
     RecyclerDataAdapter recyclerDataAdapter;
-    HashMap<String, String> jobsHashMap;
-    Dialog lessonEditDialog;
+    HashMap<String, String> jobsHashMap, lessonHashMap;
     Button btnLessonDel;
     String clickedLName;
-    int cNewJobs = 0, cChecking = 0, cFinished = 0;
+    int cNewJobs = 0, cChecking = 0, cFinished = 0, lessonCount = 0;
     FloatingActionButton fab;
-    ArrayList<GroupDataItem> groupsList, groupsListNewJobs, groupsListCheckingJobs, groupsListFinishedJobs;
-    ArrayList<StudentsItem> childStoreNewJobs, childStoreCheckingJobs, childStoreFinishedJobs;
+    ArrayList<GroupDataItem> groupsList, groupsListNewJobs, groupsListCheckingJobs, groupsListFinishedJobs, semestrGroup;
+    ArrayList<StudentsItem> childStoreNewJobs, childStoreCheckingJobs, childStoreFinishedJobs, childLessons;
     String tKey;
-    Dialog addNewJobDialog;
-    RecyclerView jobListRecyclerView;
-    RecyclerView.LayoutManager linearLayoutManager;
-    JobTypesAdapter jobTypesAdapter;
+    Dialog teacherLessonsDialog, lessonEditDialog, addNewJobDialog;
+    RecyclerView jobListRecyclerView, lessonListRecyclerView;
+    RecyclerView.LayoutManager linearLayoutManager, linearLayoutManager2;
+    JobTypesAdapter jobTypesAdapter, lessonListAdapter;
     String jobTypes[];
+    BottomNavigationView navigation;
+    Button lessonBtn;
+    boolean firstTime = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +82,16 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         setTitle(getResources().getString(R.string.my_jobs));
 
         createView();
+
     }
 
     public void createView() {
 
         cartList = new ArrayList<>();
         jobsHashMap = new HashMap<>();
+        lessonHashMap = new HashMap<>();
         groupsList = new ArrayList<>();
+        semestrGroup = new ArrayList<>();
         jobTypes = getResources().getStringArray(R.array.jobTypes);
 
         tPhoto = findViewById(R.id.teacherPhoto);
@@ -94,37 +99,59 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         tProgress = findViewById(R.id.teacherProgress);
         teacherProgressPhoto = findViewById(R.id.twice_colored_progress);
         fab = findViewById(R.id.addNewJob);
+        lessonBtn = findViewById(R.id.teacherLessonsBtn);
         recyclerView = findViewById(R.id.recycler_view);
 
         teacherRef = FirebaseDatabase.getInstance().getReference();
+        lessonRef = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager2 = new LinearLayoutManager(this);
+
+
+        //------------ Lesson List Dialog
+
+        teacherLessonsDialog = new Dialog(this);
+        teacherLessonsDialog.setContentView(R.layout.dialog_add_new_job_recycler);
+        teacherLessonsDialog.setTitle(getResources().getString(R.string.lessonList));
+
+        lessonListRecyclerView = teacherLessonsDialog.findViewById(R.id.recyclerView);
+        lessonListRecyclerView.setHasFixedSize(true);
+        lessonListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        lessonListRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        //lessonListAdapter = new JobTypesAdapter(this, lessonList);
+//        lessonListRecyclerView.setAdapter(lessonListAdapter);
+
+        //------------
         addNewJobDialog = new Dialog(this);
         addNewJobDialog.setContentView(R.layout.dialog_add_new_job_recycler);
+        addNewJobDialog.setTitle(getResources().getString(R.string.addingNewJob));
         jobListRecyclerView = addNewJobDialog.findViewById(R.id.recyclerView);
         jobListRecyclerView.setHasFixedSize(true);
 
-        linearLayoutManager = new LinearLayoutManager(this);
         jobListRecyclerView.setLayoutManager(linearLayoutManager);
         jobListRecyclerView.setItemAnimator(new DefaultItemAnimator());
         jobListRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-
         jobTypesAdapter = new JobTypesAdapter(this, jobTypes);
         jobListRecyclerView.setAdapter(jobTypesAdapter);
 
         fab.setOnClickListener(this);
-
+        lessonBtn.setOnClickListener(this);
 
         lessonEditDialog = new Dialog(this);
         lessonEditDialog.setContentView(R.layout.dialog_lesson_edit);
+
         btnLessonDel = lessonEditDialog.findViewById(R.id.btnDel);
         btnLessonDel.setOnClickListener(this);
 
         Intent t = getIntent();
         tKey = t.getStringExtra("teacher_key");
+
         getTeachersData(tKey);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
@@ -135,15 +162,59 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
             case R.id.addNewJob:
                 addNewJobDialog.show();
                 break;
+            case R.id.teacherLessonsBtn:
+                teacherLessonsDialog.show();
+                break;
 
         }
+    }
+
+
+    public void getLessons() {
+        lessonRef = teacherRef.child("lessons");
+        lessonRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                semestrGroup = new ArrayList<>();
+
+                GroupDataItem groupNewJ;
+                String parentKey;
+                lessonCount = 0;
+
+                for (DataSnapshot dataDates : dataSnapshot.getChildren()) {
+                    parentKey = dataDates.getKey();
+
+                    childLessons = new ArrayList<>();
+
+                    for (DataSnapshot lessonSnapshot : dataDates.getChildren()) {
+                        String jobKey = lessonSnapshot.getKey();
+                        Lesson lesson = lessonSnapshot.getValue(Lesson.class);
+
+                        childLessons.add(new StudentsItem(""+lesson.getName()+"\nСағат саны: "+lesson.getHours()));
+
+                        lessonHashMap.put(lesson.getName(), jobKey);
+                    }
+
+
+                    groupNewJ = new GroupDataItem(childLessons);
+                    groupNewJ.setParentName(parentKey);
+                    semestrGroup.add(groupNewJ);
+                }
+
+                modifyLessonsAdapter();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
     public void getTeachersData(String tEmail) {
 
         teacherRef = teacherRef.child("personnel_store").child("store").child(tEmail);
         Query myTopPostsQuery = teacherRef.child("jobs");
 
-        myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        myTopPostsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 groupsListNewJobs = new ArrayList<>();
@@ -186,7 +257,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
                         cNewJobs += childStoreNewJobs.size();
                     }
-                    
+
                     if (childStoreCheckingJobs.size() != 0) {
                         checkJ = new GroupDataItem(childStoreCheckingJobs);
                         checkJ.setParentName(parentKey);
@@ -201,8 +272,16 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
 
-                groupsList = groupsListNewJobs;
+                if(!firstTime || navigation.getSelectedItemId() == R.id.new_jobs){
+                    groupsList = groupsListNewJobs;
+                }else  if(navigation.getSelectedItemId() == R.id.checking_jobs){
+                    groupsList = groupsListCheckingJobs;
+                }else  if(navigation.getSelectedItemId() == R.id.finished_jobs){
+                    groupsList = groupsListFinishedJobs;
+                }
+
                 modifyAdapter();
+                firstTime = true;
                 countProgress();
             }
 
@@ -231,6 +310,9 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        getLessons();
 
     }
 
@@ -240,11 +322,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         if(all==0) all = 1;
 
         long res = cFinished * 100 / all;
-
-        Log.i("info", "count_finished: " + cFinished + " all: " + all + "res: " + res);
-
         teacherRef.child("progress").setValue(res);
-
         teacherProgressPhoto.setProgress(res);
         teacherProgressPhoto.setAnimated(true, 3000, new BounceInterpolator());
 
@@ -293,7 +371,13 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerDataAdapter);
         recyclerView.setHasFixedSize(true);
+    }
 
+    public void modifyLessonsAdapter() {
+        recyclerDataAdapter = new RecyclerDataAdapter(getLessonsData());
+        lessonListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        lessonListRecyclerView.setAdapter(recyclerDataAdapter);
+        lessonListRecyclerView.setHasFixedSize(true);
     }
 
     @Override
@@ -317,6 +401,10 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
     private ArrayList<GroupDataItem> getGroupsData() {
         return groupsList;
+    }
+
+    private ArrayList<GroupDataItem> getLessonsData() {
+        return semestrGroup;
     }
 
     private class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapter.MyViewHolder> {
@@ -350,7 +438,9 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
             }
             for (int textViewIndex = 0; textViewIndex < noOfChild; textViewIndex++) {
                 TextView currentTextView = (TextView) holder.linearLayout_childItems.getChildAt(textViewIndex);
-                currentTextView.setText(dummyParentDataItem.getChildDataItems().get(textViewIndex).getChildName());
+                String childName = dummyParentDataItem.getChildDataItems().get(textViewIndex).getChildName();
+                childName = childName.replace("semestr","семестр");
+                currentTextView.setText(childName);
             }
         }
 

@@ -44,6 +44,16 @@
             app:stroke_width="7dp"
             app:text_color="@color/transparent"/>
 
+        <Button
+            android:id="@+id/teacherLessonsBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@+id/teacherPhoto"
+            android:background="@drawable/l_menu"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/teacherInfo"
@@ -68,18 +78,7 @@
             android:text="@string/progress"
             android:textSize="15sp" />
 
-
     </RelativeLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addNewJob"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp"
-        android:layout_above="@id/navigation"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -101,6 +100,15 @@
         app:itemTextColor="@drawable/bottom_nav_colors"
         app:menu="@menu/navigation" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addNewJob"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_above="@id/navigation"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 
 </RelativeLayout>

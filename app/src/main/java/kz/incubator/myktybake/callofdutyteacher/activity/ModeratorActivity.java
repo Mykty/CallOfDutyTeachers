@@ -15,10 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import kz.incubator.myktybake.callofdutyteacher.R;
 import kz.incubator.myktybake.callofdutyteacher.moderator_files.TeacherListFragment;
 
@@ -52,8 +49,6 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
     public void createFragments(){
         teacherListFragment = new TeacherListFragment();
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,12 +100,14 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
             //super.onBackPressed();
         }
     }
+
     public void changeFragment(Fragment cfragment){
         Fragment fragment = cfragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
     }
+
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -128,4 +125,5 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
             Toast.makeText(ModeratorActivity.this, "There is no inet connection", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
