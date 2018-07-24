@@ -14,8 +14,9 @@
 
         <TextView
             android:id="@+id/tv_parentName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tv_count"
             android:text="yahoo"
             android:padding="16dp"/>
 

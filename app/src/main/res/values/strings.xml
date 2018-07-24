@@ -23,7 +23,7 @@
     <string name="news">Хабарландыру</string>
 
     <string name="teacher_list">Мұғалімдер тізімі</string>
-    <string name="progress">Өнімділік: 0%</string>
+    <string name="progress">Өнімділігі: 0%</string>
 
     <string name="job1">Жаңа</string>
     <string name="job2">Тексеріс</string>
@@ -33,6 +33,9 @@
     <string name="semestr2">II семестр</string>
 
     <string name="delStr">Өшіру</string>
+    <string name="checkStr">Тексеру</string>
+    <string name="finishedStr">Біткен жұмыс</string>
+    <string name="mistakeStr">Қатесі бар</string>
     <string name="addingNewTeacher2">Жаңа мұғалім енгізу!</string>
     <string name="name">Аты-жөні</string>
     <string name="email">Емайл</string>
@@ -46,6 +49,14 @@
     <string name="addingNewTeacherSuccess">Жаңа адам сәтті енгізілді!</string>
     <string name="photoLoading">Сурет сақталып жатыр...</string>
     <string name="inetConnection">Интернет байланысыңызды тексеріңіз!</string>
+    <string name="addingLesson">Сабақ енгізу</string>
+    <string name="selectSemestr">Семестр таңдаңыз</string>
+    <string name="selectLesson">Сабақты таңдаңыз</string>
+    <string name="selectCourse">Топты таңдаңыз</string>
+    <string name="lessonName">Пән аты</string>
+    <string name="hour">Сағат саны</string>
+    <string name="adding">Енгізу</string>
+    <string name="desc">Түсініктемесі</string>
 
     <string name="notfoundUser">Қолданушы табылған жоқ!</string>
     <string name="phoneNumberMistake">Телефон номер дұрыс толтырылмады</string>
@@ -58,17 +69,18 @@
     <string name="email_duplicate">Бұндай электр. пошта мекен-жайы тіркелген</string>
 
     <string-array name="jobTypes">
-        <item>Аттестация</item>
-        <item>Журнал</item>
-        <item>Сынақ</item>
-        <item>Емтихан</item>
         <item>РУП</item>
         <item>КТП</item>
-        <item>Сабақ жоспары</item>
-        <item>Практика</item>
-        <item>Кураторлық жұмыстар</item>
-        <item>Портфолио</item>
-        <item>Басқа</item>
+        <item>сабақ жоспары</item>
+        <item>аттестация 1</item>
+        <item>аттестация 2</item>
+        <item>сынақ</item>
+        <item>емтихан</item>
+        <item>журнал</item>
+        <item>практика</item>
+        <item>кураторлық жұмыстар</item>
+        <item>портфолио</item>
+        <item>басқа</item>
     </string-array>
 
     <string-array name="lessonList">
@@ -77,6 +89,25 @@
         <item>1-03 Информатика\nСағат саны: 56</item>
         <item>1-04 Информатика\nСағат саны: 30</item>
         <item>2-01 Информатика\nСағат саны: 42</item>
+    </string-array>
+
+    <string-array name="semestrStore">
+        <item>I семестр</item>
+        <item>II семестр</item>
+    </string-array>
+
+    <string-array name="courseStrore">
+        <item>1-01</item>
+        <item>1-02</item>
+        <item>1-03</item>
+        <item>1-04</item>
+        <item>2-01</item>
+        <item>2-02</item>
+        <item>2-03</item>
+        <item>3-01</item>
+        <item>3-02</item>
+        <item>3-03</item>
+        <item>4-09</item>
     </string-array>
 
 </resources>

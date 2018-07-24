@@ -76,14 +76,14 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
 
         long progressLong = item.getProgress();
         String progStr = context.getResources().getString(R.string.progress);
-        holder.progress.setText(progStr.substring(0,progStr.indexOf(":")) +" "+progressLong+" %");
+        holder.progress.setText(progStr.substring(0,progStr.indexOf(":")) +": "+progressLong+" %");
 
         if (progressLong < 50) {
             holder.progress.setTextColor(context.getResources().getColor(R.color.red));
         } else if (progressLong >= 50 && progressLong <= 75) {
             holder.progress.setTextColor(context.getResources().getColor(R.color.orange));
         } else {
-            holder.progress.setTextColor(context.getResources().getColor(R.color.colorAccent));
+            holder.progress.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }
 
         holder.textViewOptions.setOnClickListener(new View.OnClickListener() {

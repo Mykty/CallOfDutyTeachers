@@ -42,15 +42,28 @@
             app:left_sided_color="@color/colorAccent"
             app:right_sided_color="@color/colorAccent"
             app:stroke_width="7dp"
-            app:text_color="@color/transparent"/>
+            app:text_color="@color/transparent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:indeterminate="false"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:background="@drawable/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="65" />
 
         <Button
             android:id="@+id/teacherLessonsBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="25dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/teacherPhoto"
             android:background="@drawable/l_menu"
             android:gravity="center" />
@@ -74,8 +87,8 @@
             android:layout_below="@+id/teacherInfo"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:textColor="@color/green"
             android:text="@string/progress"
+            android:textColor="@color/green"
             android:textSize="15sp" />
 
     </RelativeLayout>
@@ -84,8 +97,8 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/teacherInfoFrame"
         android:layout_above="@id/navigation"
+        android:layout_below="@+id/teacherInfoFrame"
         android:layout_margin="10dp"
         android:scrollbars="vertical" />
 
@@ -104,10 +117,10 @@
         android:id="@+id/addNewJob"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp"
         android:layout_above="@id/navigation"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="25dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 
