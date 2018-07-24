@@ -20,9 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.arbelkilani.bicoloredprogress.BiColoredProgress;
@@ -66,15 +69,16 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
     ArrayList<GroupDataItem> groupsList, groupsListNewJobs, groupsListCheckingJobs, groupsListFinishedJobs, semestrGroup;
     ArrayList<StudentsItem> childStoreNewJobs, childStoreCheckingJobs, childStoreFinishedJobs, childLessons;
     String tKey;
-    Dialog teacherLessonsDialog, lessonEditDialog, addNewJobDialog;
+    Dialog teacherLessonsDialog, lessonEditDialog, addNewJobDialog, addingLesson;
     RecyclerView jobListRecyclerView, lessonListRecyclerView;
     RecyclerView.LayoutManager linearLayoutManager, linearLayoutManager2;
-    JobTypesAdapter jobTypesAdapter, lessonListAdapter;
+    JobTypesAdapter jobTypesAdapter;
     String jobTypes[];
     BottomNavigationView navigation;
-    Button lessonBtn;
+    Button lessonBtn, addNewLessonBtn, enterLessonBtn;
     boolean firstTime = false;
-
+    Spinner semestrSp, courseSp;
+    EditText lessonName, lessonHour;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +117,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         //------------ Lesson List Dialog
 
         teacherLessonsDialog = new Dialog(this);
-        teacherLessonsDialog.setContentView(R.layout.dialog_add_new_job_recycler);
+        teacherLessonsDialog.setContentView(R.layout.dialog_lesson_list);
         teacherLessonsDialog.setTitle(getResources().getString(R.string.lessonList));
 
         lessonListRecyclerView = teacherLessonsDialog.findViewById(R.id.recyclerView);
@@ -121,10 +125,33 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         lessonListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         lessonListRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        addNewLessonBtn = teacherLessonsDialog.findViewById(R.id.addNewLesson);
         //lessonListAdapter = new JobTypesAdapter(this, lessonList);
 //        lessonListRecyclerView.setAdapter(lessonListAdapter);
 
         //------------
+
+        // ----------- Dialog Adding new lesson -------
+        addingLesson = new Dialog(this);
+        addingLesson.setContentView(R.layout.dialog_adding_lesson);
+        addingLesson.setTitle(getResources().getString(R.string.addingLesson));
+        semestrSp = addingLesson.findViewById(R.id.semestrSpinner);
+        courseSp = addingLesson.findViewById(R.id.courseSpinner);
+        enterLessonBtn = addingLesson.findViewById(R.id.enterLesson);
+        lessonName = addingLesson.findViewById(R.id.lessonName);
+        lessonHour = addingLesson.findViewById(R.id.lessonHour);
+
+
+        String semestrStr [] = getResources().getStringArray(R.array.semestrStore);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, semestrStr);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.courseStrore,android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        semestrSp.setAdapter(adapter);
+        courseSp.setAdapter(adapter2);
+
         addNewJobDialog = new Dialog(this);
         addNewJobDialog.setContentView(R.layout.dialog_add_new_job_recycler);
         addNewJobDialog.setTitle(getResources().getString(R.string.addingNewJob));
@@ -139,6 +166,8 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
         fab.setOnClickListener(this);
         lessonBtn.setOnClickListener(this);
+        addNewLessonBtn.setOnClickListener(this);
+        enterLessonBtn.setOnClickListener(this);
 
         lessonEditDialog = new Dialog(this);
         lessonEditDialog.setContentView(R.layout.dialog_lesson_edit);
@@ -162,8 +191,37 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
             case R.id.addNewJob:
                 addNewJobDialog.show();
                 break;
+
             case R.id.teacherLessonsBtn:
                 teacherLessonsDialog.show();
+                break;
+
+            case R.id.addNewLesson:
+
+                addingLesson.show();
+
+                break;
+
+            case R.id.enterLesson:
+
+                String semestrStr = semestrSp.getSelectedItem().toString();
+                String courseStr = courseSp.getSelectedItem().toString();
+                String lessontNameStr = lessonName.getText().toString();
+                String lessontHourStr = lessonHour.getText().toString();
+
+                if(lessontNameStr.length()==0) lessonName.setError(getResources().getString(R.string.fill_mistake));
+                if(lessontHourStr.length()==0) lessonName.setError(getResources().getString(R.string.fill_mistake));
+
+                if(lessontNameStr.length()>0 && lessontHourStr.length()>0){
+                    String key = lessonRef.child(semestrStr).push().getKey();
+
+                    Lesson lesson = new Lesson(key, courseStr, courseStr+" "+lessontNameStr, Long.parseLong(lessontHourStr));
+                    lessonRef.child(semestrStr).child(key).setValue(lesson);
+
+                }
+
+                addingLesson.dismiss();
+
                 break;
 
         }
@@ -494,7 +552,6 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
                     clickedLName = textViewClicked.getText().toString();
                     textViewClicked.setBackgroundColor(getResources().getColor(R.color.light_green));
                     lessonEditDialog.show();
-
 
                     //Toast.makeText(getActivity(), "Yahoo: "+lessonKey.get(clickedSName), Toast.LENGTH_SHORT).show();
                 }

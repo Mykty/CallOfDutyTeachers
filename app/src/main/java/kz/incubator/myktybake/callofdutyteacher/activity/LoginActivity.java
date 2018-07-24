@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        goToClass();
     }
 
     public void checkUserExist2(final String tEmail, final String tPassword) {
@@ -117,6 +118,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void goToClass(){
+        Intent t = new Intent(LoginActivity.this, ModeratorActivity.class);
+        startActivity(t);
+    }
     public void signIn(final String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
