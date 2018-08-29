@@ -1,7 +1,6 @@
 package kz.incubator.myktybake.callofdutyteacher.moderator_files;
 
 import android.animation.ObjectAnimator;
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +54,7 @@ import kz.incubator.myktybake.callofdutyteacher.rexpandable.StudentsItem;
 public class TeacherJobActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView tPhoto;
-    TextView tInfo, tProgress;
+    TextView tInfo, tProgress, lessonTx;
     Button btnLessonDel;
     FloatingActionButton fab;
     Button lessonBtn, addNewLessonBtn, enterLessonBtn, btnCheck, btnDel, btnFinished;
@@ -85,7 +83,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
     RecyclerDataAdapter recyclerDataAdapter;
     RecyclerView jobListRecyclerView, lessonListRecyclerView;
 
-    Dialog teacherLessonsDialog, lessonEditDialog, addNewJobDialog, addingLesson, newJobConfigDialog, jobEditDialog;
+    Dialog teacherLessonsDialog, lessonEditDialog, addingLesson, newJobConfigDialog, jobEditDialog, addNewJobDialog;
     JobTypesAdapter jobTypesAdapter;
     BottomNavigationView navigation;
     ProgressBar progressBar;
@@ -156,16 +154,13 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
         btnDel = jobEditDialog.findViewById(R.id.btnDel);
         btnCheck = jobEditDialog.findViewById(R.id.btnCheck);
+        lessonTx = jobEditDialog.findViewById(R.id.lessonTx);
         btnFinished = jobEditDialog.findViewById(R.id.btnFinished);
         mistakeStr = getResources().getString(R.string.mistakeStr);
 
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                parentStr = textView_parentName.getText().toString();
-//                keyJob  = parentStr+clickedLName;
-//                jobEditDialog.setTitle(parentStr+"\n"+clickedLName);
 
                 String jobKey = jobStoreHashMap.get(keyJob).getKey();
 
@@ -210,8 +205,11 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+
     public void createAddingNewJobDialog() {
-        addNewJobDialog = new Dialog(this);
+
+        addNewJobDialog = new Dialog(this, R.style.CustomDialog);
+
         addNewJobDialog.setContentView(R.layout.dialog_add_new_job_recycler);
         addNewJobDialog.setTitle(getResources().getString(R.string.addingNewJob));
         jobListRecyclerView = addNewJobDialog.findViewById(R.id.recyclerView);
@@ -257,7 +255,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void createLessonJobConfigDialog() {
-        newJobConfigDialog = new Dialog(this);
+        newJobConfigDialog = new Dialog(this, R.style.CustomDialog);
         newJobConfigDialog.setContentView(R.layout.dialog_job_config);
 
         Button enterJob = newJobConfigDialog.findViewById(R.id.enterJob);
@@ -277,7 +275,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
 
     public void createAddingNewLessonDialog() {
 
-        addingLesson = new Dialog(this);
+        addingLesson = new Dialog(this, R.style.CustomDialog);
         addingLesson.setContentView(R.layout.dialog_adding_lesson);
         addingLesson.setTitle(getResources().getString(R.string.addingLesson));
         semestrSp = addingLesson.findViewById(R.id.semestrSpinner);
@@ -300,7 +298,7 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void createTeacherLessonsDialog() {
-        teacherLessonsDialog = new Dialog(this);
+        teacherLessonsDialog = new Dialog(this, R.style.CustomDialog);
         teacherLessonsDialog.setContentView(R.layout.dialog_lesson_list);
         teacherLessonsDialog.setTitle(getResources().getString(R.string.lessonList));
 
@@ -604,21 +602,15 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
         lessonListRecyclerView.setHasFixedSize(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.sign_out) {
-            //mAuth.signOut();
-            finish();
-            return true;
-        }
 
         if(id == android.R.id.home) {
             this.finish();
@@ -833,7 +825,8 @@ public class TeacherJobActivity extends AppCompatActivity implements View.OnClic
                         btnCheck.setText(getResources().getString(R.string.checkStr));
                     }
 
-                    jobEditDialog.setTitle(parentStr + "\n" + clickedLName);
+//                    jobEditDialog.setTitle(parentStr + "\n" + clickedLName);
+                    lessonTx.setText(getResources().getString(R.string.jobName)+": "+parentStr + "\n" + clickedLName);
                     jobEditDialog.show();
                     //Toast.makeText(TeacherJobActivity.this, "key: "+jobStoreHashMap.get(keyJob).getKey(), Toast.LENGTH_SHORT).show();
                 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/lessonTx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/jobName"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lessonTx"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_edit_text"
+        android:text="@string/sendToCheck"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>

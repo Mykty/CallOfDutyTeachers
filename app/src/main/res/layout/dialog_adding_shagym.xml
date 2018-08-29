@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/selectShType"
+        android:textSize="15dp" />
+
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dip"
+        android:text="@string/selectShthing"
+        android:textSize="15dp" />
+
+    <Spinner
+        android:id="@+id/spinnerThing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/selectCourse" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/cabNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cab_number" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/shagymDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/desc"
+            android:inputType="number" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dip"
+        android:text="@string/shagym_t"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/shagymTeacher"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="Мыктыбаев Бахытжан"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dip"
+        android:text="@string/phoneNumber"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/shagymPhone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="8 747 1199701"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:id="@+id/enterLesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/adding"
+            android:textColor="@color/colorAccent" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,6 +17,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -107,7 +109,7 @@ public class TeacherListFragment extends Fragment implements View.OnClickListene
         relativeLayout = view.findViewById(R.id.relaviteL);
         fab = view.findViewById(R.id.addBtn);
 
-        dAddNewTeacher = new Dialog(getActivity());
+        dAddNewTeacher = new Dialog(getActivity(), R.style.CustomDialog);
         dAddNewTeacher.setTitle(getResources().getString(R.string.addingNewTeacher2));
         dAddNewTeacher.setContentView(R.layout.dialog_add_new_teacher);
 
@@ -157,12 +159,46 @@ public class TeacherListFragment extends Fragment implements View.OnClickListene
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        // do whatever
+                        final Teacher teacher = teachersStore.get(position);
+                        final String phoneNumber = teacher.getPhoneNumber();
+                        new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme)
+                                .setTitle("Мұғалім: " + teacher.getInfo())
+                                .setMessage("Телефон номері: " + teacher.getPhoneNumber())
+                                .setPositiveButton("Хабарласу", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                        callIntent.setData(Uri.parse("tel:" + phoneNumber));
+                                        try {
+                                            getActivity().startActivity(callIntent);
+
+                                        } catch (SecurityException e) {
+                                        }
+                                    }
+                                })
+
+                                .setNegativeButton("Смс жазу", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Uri uri = Uri.parse("smsto:" + phoneNumber);
+                                        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                                        smsIntent.putExtra("sms_body", "SDCL");
+                                        getActivity().startActivity(smsIntent);
+                                    }
+                                })
+
+                                .setNeutralButton("Өшіру", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mDatabaseRef.child(teacher.getKey()).removeValue();
+                                    }
+                                })
+                                .show();
                     }
                 })
         );
-
-
     }
 
     public void fillTeachers() {

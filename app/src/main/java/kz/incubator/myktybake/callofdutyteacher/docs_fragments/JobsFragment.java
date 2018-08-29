@@ -49,7 +49,7 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
 
     View view;
     ImageView tPhoto;
-    TextView tInfo, tProgress;
+    TextView tInfo, tProgress, lessonTx;
     DatabaseReference teacherRef;
     BiColoredProgress teacherProgressPhoto;
 
@@ -58,10 +58,14 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
     FirebaseUser currentUser;
     RecyclerDataAdapter recyclerDataAdapter;
     HashMap<String, String> jobsHashMap;
-    Dialog lessonEditDialog;
-    Button btnLessonDel;
-    String clickedLName;
+    HashMap<String, Job> jobStoreHashMap;
+    Dialog lessonEditDialog, jobEditDialog;
+    Button btnLessonDel, btnCheck;
+    String clickedLName, mistakeStr, keyJob, parentStr;
     int cNewJobs = 0, cChecking = 0, cFinished = 0;
+    boolean firstTime = false;
+    BottomNavigationView navigation;
+    boolean newJobsPressed = false;
 
     ArrayList<GroupDataItem> groupsList, groupsListNewJobs, groupsListCheckingJobs, groupsListFinishedJobs;
     ArrayList<StudentsItem> childStoreNewJobs, childStoreCheckingJobs, childStoreFinishedJobs;
@@ -82,6 +86,7 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
 
         cartList = new ArrayList<>();
         jobsHashMap = new HashMap<>();
+        jobStoreHashMap = new HashMap<>();
 
         groupsList = new ArrayList<>();
 
@@ -102,11 +107,39 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
         btnLessonDel = lessonEditDialog.findViewById(R.id.btnDel);
         btnLessonDel.setOnClickListener(this);
 
+        mistakeStr = getResources().getString(R.string.mistakeStr);
 
         getTeachersData(emailStr);
+        createJobEditDialog();
 
-        BottomNavigationView navigation = view.findViewById(R.id.navigation);
+        navigation = view.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+    }
+
+    public void createJobEditDialog() {
+        jobEditDialog = new Dialog(getActivity());
+        jobEditDialog.setContentView(R.layout.dialog_edit_teacher_job);
+
+        btnCheck = jobEditDialog.findViewById(R.id.btnCheck);
+        lessonTx = jobEditDialog.findViewById(R.id.lessonTx);
+
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String jobKey = jobStoreHashMap.get(keyJob).getKey();
+
+                if (clickedLName.contains(mistakeStr)) {
+                    clickedLName = clickedLName.substring(0, clickedLName.indexOf(mistakeStr) - 3);
+                    teacherRef.child("jobs").child(parentStr).child(jobKey).child("name").setValue(clickedLName);
+                }
+
+                teacherRef.child("jobs").child(parentStr).child(jobKey).child("status").setValue("checking");
+
+                jobEditDialog.dismiss();
+            }
+        });
 
     }
 
@@ -144,7 +177,6 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
                     childStoreFinishedJobs = new ArrayList<>();
 
                     for (DataSnapshot jobSnapshot : dataDates.getChildren()) {
-                        String jobKey = jobSnapshot.getKey();
 
                         Job job = jobSnapshot.getValue(Job.class);
 
@@ -156,7 +188,7 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
                             childStoreFinishedJobs.add(new StudentsItem("" + job.getName()));
                         }
 
-                        jobsHashMap.put(job.getName(), jobKey);
+                        jobStoreHashMap.put(parentKey + job.getName(), job);
                     }
 
                     if (childStoreNewJobs.size() != 0) {
@@ -181,8 +213,16 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                groupsList = groupsListNewJobs;
+                if (!firstTime || navigation.getSelectedItemId() == R.id.new_jobs) {
+                    groupsList = groupsListNewJobs;
+                } else if (navigation.getSelectedItemId() == R.id.checking_jobs) {
+                    groupsList = groupsListCheckingJobs;
+                } else if (navigation.getSelectedItemId() == R.id.finished_jobs) {
+                    groupsList = groupsListFinishedJobs;
+                }
+
                 modifyAdapter();
+                firstTime = true;
                 countProgress();
             }
 
@@ -217,11 +257,9 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
     public void countProgress() {
 
         int all = cFinished + cNewJobs + cChecking;
-        if(all==0) all = 1;
+        if (all == 0) all = 1;
 
-        long res = cFinished * 100 / all;
-
-        Log.i("info", "count_finished: " + cFinished + " all: " + all + "res: " + res);
+        long res = (cFinished + cChecking) * 100 / all;
 
         teacherRef.child("progress").setValue(res);
 
@@ -260,15 +298,18 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
                     groupsList = groupsListNewJobs;
 
                     modifyAdapter();
+                    newJobsPressed = true;
                     return true;
                 case R.id.checking_jobs:
                     groupsList = groupsListCheckingJobs;
 
+                    newJobsPressed = false;
                     modifyAdapter();
 
                     return true;
                 case R.id.finished_jobs:
                     groupsList = groupsListFinishedJobs;
+                    newJobsPressed = false;
                     modifyAdapter();
 
                     return true;
@@ -312,7 +353,12 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
             }
             for (int textViewIndex = 0; textViewIndex < noOfChild; textViewIndex++) {
                 TextView currentTextView = (TextView) holder.linearLayout_childItems.getChildAt(textViewIndex);
-                currentTextView.setText(dummyParentDataItem.getChildDataItems().get(textViewIndex).getChildName());
+                String childName = dummyParentDataItem.getChildDataItems().get(textViewIndex).getChildName();
+                currentTextView.setText(childName);
+
+                if (childName.contains(mistakeStr)) {
+                    currentTextView.setBackgroundColor(getResources().getColor(R.color.red));
+                }
             }
         }
 
@@ -364,8 +410,15 @@ public class JobsFragment extends Fragment implements View.OnClickListener {
                 } else {
                     TextView textViewClicked = (TextView) view;
                     clickedLName = textViewClicked.getText().toString();
-                    textViewClicked.setBackgroundColor(getResources().getColor(R.color.light_green));
-                    lessonEditDialog.show();
+
+                    //textViewClicked.setBackgroundColor(getResources().getColor(R.color.light_green));
+                    //lessonEditDialog.show();
+
+                    parentStr = textView_parentName.getText().toString();
+                    keyJob = parentStr + clickedLName;
+
+                    lessonTx.setText(getResources().getString(R.string.jobName) + ": " + parentStr + "\n" + clickedLName);
+                    if(newJobsPressed) jobEditDialog.show();
 
 
                     //Toast.makeText(getActivity(), "Yahoo: "+lessonKey.get(clickedSName), Toast.LENGTH_SHORT).show();

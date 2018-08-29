@@ -15,7 +15,7 @@ buildscript {
         classpath 'com.google.gms:google-services:3.1.0'
     }
 }
-
+/Users/myktybake/Desktop/Android workspace/CallOfDutyTeachers/CallOfDutyTeachers/app/build.gradle
 allprojects {
     repositories {
         google()

@@ -3,6 +3,7 @@ package kz.incubator.myktybake.callofdutyteacher;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button btnJobs, btnDuty;
     FirebaseAuth mAuth;
-    DatabaseReference teacherRef;
+    DatabaseReference teacherRef, shagymdarRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDuty.setOnClickListener(this);
 
         teacherRef = FirebaseDatabase.getInstance().getReference();
+        shagymdarRef = FirebaseDatabase.getInstance().getReference();
         teacherRef = teacherRef.child("personnel_store").child("store");
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String cEmail = currentUser.getEmail().toString();
         checkCookieUserExist(cEmail);
-
     }
 
     public void checkCookieUserExist(String tEmail) {

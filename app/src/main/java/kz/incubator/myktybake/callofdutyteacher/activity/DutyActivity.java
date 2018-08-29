@@ -108,6 +108,7 @@ public class DutyActivity extends AppCompatActivity implements NavigationView.On
         punishedReportFragment = new PunishedReportFragment();
     }
 
+
     public void checkVersion(){
         Query myTopPostsQuery = mDatabase.child("current_student_version");
         myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {

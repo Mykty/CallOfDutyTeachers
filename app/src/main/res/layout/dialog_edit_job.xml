@@ -5,16 +5,27 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
+    <TextView
+        android:id="@+id/lessonTx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/jobName"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
     <Button
         android:id="@+id/btnCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shape_edit_text"
         android:text="@string/checkStr"
+        android:layout_below="@id/lessonTx"
         android:textColor="@color/colorAccent"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnFinished"
@@ -23,11 +34,10 @@
         android:layout_below="@id/btnCheck"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
         android:background="@drawable/shape_edit_text"
         android:text="@string/finishedStr"
         android:textColor="@color/colorAccent"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnDel"
@@ -36,11 +46,10 @@
         android:layout_below="@id/btnFinished"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:layout_weight="1"
         android:background="@drawable/shape_edit_text"
         android:text="@string/delStr"
         android:textColor="@color/bg_row_background"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

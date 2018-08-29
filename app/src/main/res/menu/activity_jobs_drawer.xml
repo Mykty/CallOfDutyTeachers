@@ -19,9 +19,13 @@
             android:icon="@drawable/notepad"
             android:title="@string/instructions" />
         <item
-            android:id="@+id/mistakes"
+            android:id="@+id/news"
             android:icon="@drawable/alarm"
             android:title="@string/news" />
+        <item
+            android:id="@+id/shagymdar"
+            android:icon="@drawable/list"
+            android:title="@string/shagym_str" />
 
     </group>
 

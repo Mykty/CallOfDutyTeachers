@@ -29,7 +29,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
 
     public class MyTViewHolder extends RecyclerView.ViewHolder {
         public ImageView person_photo;
-        public TextView info, phone_number, progress, textViewOptions;
+        public TextView info, phone_number, progress;
         public RelativeLayout relativeLayout;
 
         public MyTViewHolder(View view) {
@@ -38,7 +38,6 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
             info = view.findViewById(R.id.info);
             phone_number = view.findViewById(R.id.number);
             progress = view.findViewById(R.id.progress);
-            textViewOptions = itemView.findViewById(R.id.textViewOptions);
 
             relativeLayout = view.findViewById(R.id.realL);
         }
@@ -85,46 +84,6 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
         } else {
             holder.progress.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }
-
-        holder.textViewOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new AlertDialog.Builder(context, R.style.AlertDialogTheme)
-                        .setTitle("Мұғалім: " + item.getInfo())
-                        .setMessage("Телефон номері: " + phoneNumber)
-                        .setPositiveButton("Хабарласу", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                                callIntent.setData(Uri.parse("tel:" + phoneNumber));
-                                try{
-                                    context.startActivity(callIntent);
-
-                                }catch (SecurityException e){}
-                            }
-                        })
-
-                        .setNegativeButton("Смс жазу", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Uri uri = Uri.parse("smsto:" + phoneNumber);
-                                Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                                smsIntent.putExtra("sms_body", "SDCL");
-                                context.startActivity(smsIntent);
-                            }
-                        })
-                        .setNeutralButton("Өшіру", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mDatabaseRef.child(item.getKey()).removeValue();
-                            }
-                        })
-                        .show();
-            }
-        });
 
     }
 

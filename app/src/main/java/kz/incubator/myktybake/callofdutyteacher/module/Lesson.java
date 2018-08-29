@@ -1,6 +1,5 @@
 package kz.incubator.myktybake.callofdutyteacher.module;
 
-
 public class Lesson {
     String key;
     String course;

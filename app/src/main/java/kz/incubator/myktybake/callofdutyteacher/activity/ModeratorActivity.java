@@ -15,12 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
+
 import kz.incubator.myktybake.callofdutyteacher.R;
+import kz.incubator.myktybake.callofdutyteacher.moderator_files.NewsFragment;
 import kz.incubator.myktybake.callofdutyteacher.moderator_files.TeacherListFragment;
 
 public class ModeratorActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TeacherListFragment teacherListFragment;
+    NewsFragment newsFragment;
     FirebaseAuth mAuth;
 
     @Override
@@ -41,13 +45,14 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
         navigationView.getMenu().getItem(0).setChecked(true);
 
         createFragments();
-        changeFragment(teacherListFragment);
+        changeFragment(newsFragment);
         checkInetConnection();
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void createFragments(){
+    public void createFragments() {
         teacherListFragment = new TeacherListFragment();
+        newsFragment = new NewsFragment();
     }
 
     @Override
@@ -74,16 +79,12 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.teacher_list){
-
+        if (id == R.id.teacher_list) {
             changeFragment(teacherListFragment);
+        } else if (id == R.id.instructions) {
 
-        }else if (id == R.id.instructions) {
-
-
-        }else if (id == R.id.news) {
-
-
+        } else if (id == R.id.news) {
+            changeFragment(newsFragment);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -93,7 +94,7 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -101,7 +102,7 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
-    public void changeFragment(Fragment cfragment){
+    public void changeFragment(Fragment cfragment) {
         Fragment fragment = cfragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -110,7 +111,7 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
 
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
@@ -118,10 +119,10 @@ public class ModeratorActivity extends AppCompatActivity implements NavigationVi
         return isConnected;
     }
 
-    public void checkInetConnection(){
-        if(isNetworkAvailable(this)){
+    public void checkInetConnection() {
+        if (isNetworkAvailable(this)) {
 
-        }else{
+        } else {
             Toast.makeText(ModeratorActivity.this, "There is no inet connection", Toast.LENGTH_SHORT).show();
         }
     }

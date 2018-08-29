@@ -110,7 +110,6 @@ public class GroupsRecyclerActivity extends AppCompatActivity {
         return groupsList;
     }
 
-
     private class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapter.MyViewHolder> {
         private ArrayList<GroupDataItem> dummyParentDataItems;
 
@@ -210,6 +209,7 @@ public class GroupsRecyclerActivity extends AppCompatActivity {
             }
         }
     }
+
     TextView textViewClicked;
     String qr_code;
     String clickedSName;

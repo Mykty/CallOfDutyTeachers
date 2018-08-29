@@ -90,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        goToClass();
     }
 
     public void checkUserExist2(final String tEmail, final String tPassword) {

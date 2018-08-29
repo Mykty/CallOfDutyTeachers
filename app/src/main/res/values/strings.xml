@@ -16,11 +16,13 @@
     <string name="save">Сақтау</string>
     <string name="jobs_str">Міндеттерім</string>
     <string name="duty_str">Борыш</string>
-    <string name="my_lessons">Сабақтар</string>
+    <string name="my_lessons">Менім сабақтарым</string>
     <string name="my_jobs">Жұмыстар</string>
     <string name="instructions">Нұсқаулар</string>
     <string name="mistakes">Қателер</string>
     <string name="news">Хабарландыру</string>
+    <string name="shagym_str">Шағымдар</string>
+    <string name="shagym_types">шағым түрлері</string>
 
     <string name="teacher_list">Мұғалімдер тізімі</string>
     <string name="progress">Өнімділігі: 0%</string>
@@ -35,6 +37,7 @@
     <string name="delStr">Өшіру</string>
     <string name="checkStr">Тексеру</string>
     <string name="finishedStr">Біткен жұмыс</string>
+    <string name="sendToCheck">Тексеріске жіберу</string>
     <string name="mistakeStr">Қатесі бар</string>
     <string name="addingNewTeacher2">Жаңа мұғалім енгізу!</string>
     <string name="name">Аты-жөні</string>
@@ -45,18 +48,28 @@
     <string name="photoSelected">Сурет таңдалды</string>
     <string name="addingNewTeacher">Жаңа адам енгізіліп жатыр...</string>
     <string name="addingNewJob">Жаңа жұмыс енгізу.</string>
-    <string name="lessonList">Сабақтар тізімі</string>
+    <string name="lessonList">Беретін сабақтар тізімі</string>
     <string name="addingNewTeacherSuccess">Жаңа адам сәтті енгізілді!</string>
     <string name="photoLoading">Сурет сақталып жатыр...</string>
     <string name="inetConnection">Интернет байланысыңызды тексеріңіз!</string>
     <string name="addingLesson">Сабақ енгізу</string>
+    <string name="addingShagym">Жаңа шағым енгізу</string>
     <string name="selectSemestr">Семестр таңдаңыз</string>
     <string name="selectLesson">Сабақты таңдаңыз</string>
     <string name="selectCourse">Топты таңдаңыз</string>
-    <string name="lessonName">Пән аты</string>
+
+    <string name="selectShType">Түрін таңдаңыз</string>
+    <string name="selectShthing">Нысаны таңдаңыз</string>
+
+    <string name="shagym_t">Қалдырушы: </string>
+
+
+    <string name="cab_number">Кабинет</string>
+    <string name="lessonName">Сабақ аты</string>
+    <string name="jobName">Жұмыс аты</string>
     <string name="hour">Сағат саны</string>
     <string name="adding">Енгізу</string>
-    <string name="desc">Түсініктемесі</string>
+    <string name="desc">Түсіндірмесі</string>
 
     <string name="notfoundUser">Қолданушы табылған жоқ!</string>
     <string name="phoneNumberMistake">Телефон номер дұрыс толтырылмады</string>
@@ -67,6 +80,10 @@
     <string name="fill_mistake">Толығымен толтырыңыз</string>
     <string name="email_mistake">Электр. пошта мекен-жайы дұрыстап толтырыңыз</string>
     <string name="email_duplicate">Бұндай электр. пошта мекен-жайы тіркелген</string>
+
+    <string name="news_add">Хабарландыру енгізу</string>
+    <string name="news_title">Тақырыбы</string>
+    <string name="news_date">Енгізілген уақыты:</string>
 
     <string-array name="jobTypes">
         <item>РУП</item>
@@ -108,6 +125,21 @@
         <item>3-02</item>
         <item>3-03</item>
         <item>4-09</item>
+    </string-array>
+
+    <string-array name="monthStore">
+        <item>Қаңтар</item>
+        <item>Ақпан</item>
+        <item>Наурыз</item>
+        <item>Сәуір</item>
+        <item>Мамыр</item>
+        <item>Маусым</item>
+        <item>Шілде</item>
+        <item>Тамыз</item>
+        <item>Қыркүйек</item>
+        <item>Қазан</item>
+        <item>Қараша</item>
+        <item>Желтоқсан</item>
     </string-array>
 
 </resources>
